@@ -1,0 +1,38 @@
+name: Create Gibwork Bounty from Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  create-bounty:
+    runs-on: ubuntu-latest
+    # Only run when the specific label is added
+    if: github.event.label.name == 'gibwork-bounty'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Create Gibwork Bounty
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SOLANA_PRIVATE_KEY: ${{ secrets.SOLANA_PRIVATE_KEY }}
+          GIBWORK_ENVIRONMENT: ${{ vars.GIBWORK_ENVIRONMENT || 'stage' }}
+          DRY_RUN: ${{ vars.DRY_RUN || 'false' }}
+          DEFAULT_REWARD_AMOUNT: ${{ vars.DEFAULT_REWARD_AMOUNT || '25.00' }}
+          DEFAULT_TAGS: ${{ vars.DEFAULT_TAGS || 'github,open-source' }}
+          LABEL_TRIGGER: gibwork-bounty
+        run: node dist/cli.js from-event
