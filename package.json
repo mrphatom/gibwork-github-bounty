@@ -1,0 +1,42 @@
+{
+  "name": "gibwork-github-bounty",
+  "version": "1.0.0",
+  "description": "CLI + GitHub Action that turns labeled GitHub issues into funded Gibwork bounties using the official Gibwork SDK/CLI. Built for the Gibwork Developer Hackathon.",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "gibwork-github-bounty": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "gibwork",
+    "solana",
+    "bounty",
+    "github",
+    "cli",
+    "automation",
+    "sdk"
+  ],
+  "author": "mrphatom",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@gibwork/sdk": "^0.1.0",
+    "@octokit/rest": "^21.1.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
